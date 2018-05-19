@@ -1,0 +1,18 @@
+import pandas as pd
+import numpy as np
+
+df = pd.read_csv("C:/Users/v.d. Wetering/Documents/Data Science Study/Year 2/visualisation/MetroMapsEyeTracking/MetroMapsEyeTracking/dataset_clean.csv")
+
+df2 = df.loc[df['StimuliName'] == '01_Antwerpen_S1.jpg']
+
+def heatmap_data_function(df2):
+    unique_user = np.array(np.unique(df2['user']))
+    df2 = np.array(df2)
+    k = 0
+    for i in unique_user:
+        user_i_data = df2[df2[:, 6] == i][:, 4:6]
+        for j in unique_user[k:len(df2)]:
+            user_j_data=df2[df2[:, 6] == j][:, 4:6]
+            
+                
+    k=k+1
