@@ -1,0 +1,20 @@
+def compare_euc_dist(path1 , path2):
+    x1 = np.array(np.matlib.repmat(path1[:,4].reshape((len(path1),1)), 1, len(path2)))
+    x2 = np.array(np.matlib.repmat(path2[:,4].reshape((1,len(path2))), len(path1),1))
+
+    y1 = np.array(np.matlib.repmat(path1[:,5].reshape((len(path1),1)), 1, len(path2)))
+    y2 = np.array(np.matlib.repmat(path2[:,5].reshape((1,len(path2))), len(path1),1))
+    
+    distx = np.power(x1-x2,2)
+    disty = np.power(y1-y2,2)
+    
+    Euc_dist = np.array(np.power(distx+disty,0.5))
+    Euc_dist_colmin = np.amin(Euc_dist,axis = 0) # minimum distances for sequence A
+    Euc_dist_rowmin = np.amin(Euc_dist,axis = 1) # minimum distances for sequence B 
+
+    Euc_dist_tot = np.sum(Euc_dist_colmin) + np.sum(Euc_dist_rowmin)
+    map_dimensions = np.array([1920,1200])
+    m = np.power(np.power(map_dimensions[0],2) + np.power(map_dimensions[1],2),0.5) # calculate maximum possible distance!
+    Euc_dist_tot_norm = 1/((len(Euc_dist_colmin) + len(Euc_dist_rowmin)) * m) * Euc_dist_tot
+    
+    return Euc_dist_tot_norm
